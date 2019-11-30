@@ -1,9 +1,14 @@
 const express = require('express')
 var mongoose = require('mongoose');
 var CarData = require('./models/CarData')
+var routes = require('./routes');
 var mqtt = require('mqtt')
 const app = express()
 const port = 3000
+
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 mongoose.connect('mongodb://localhost:27017/CarProject'); // connect to database
 
@@ -42,13 +47,11 @@ client.on('connect', function() { // When connected
 
             data.save(function (err) {
                 if (err) throw err;
-
-                console.log("Added data for: " + carData.plate);
             });
         });
     });
 });
 
-app.get('/', (req, res) => res.send('Hello World!'))
+app.use('/api', routes);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
