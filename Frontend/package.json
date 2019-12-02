@@ -26,8 +26,10 @@
     "@fortawesome/fontawesome-free": "^5.1.0",
     "@ng-bootstrap/ng-bootstrap": "^5.0.0-rc.1",
     "@ngx-translate/core": "^11.0.1",
+    "@types/leaflet": "^1.5.5",
     "@types/mapbox-gl": "^1.5.2",
     "bootstrap": "^4.1.1",
+    "leaflet": "^1.6.0",
     "mapbox-gl": "^1.5.1",
     "rxjs": "^6.5.2",
     "zone.js": "^0.9.1"
