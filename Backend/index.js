@@ -2,6 +2,7 @@ const express = require('express')
 var mongoose = require('mongoose');
 var CarData = require('./models/CarData')
 var routes = require('./routes');
+var cors = require('cors'); 
 var mqtt = require('mqtt')
 const app = express()
 const port = 3000
@@ -25,6 +26,19 @@ var options = {
     clean: true,
     encoding: 'utf8'
 };
+
+var originsWhitelist = [
+    'http://localhost:4200'      //this is my front-end url for development
+  ];
+  var corsOptions = {
+    origin: function(origin, callback){
+          var isWhitelisted = originsWhitelist.indexOf(origin) !== -1;
+          callback(null, isWhitelisted);
+    },
+    credentials:true
+  }
+  //here is the magic
+  app.use(cors(corsOptions));
 
 var client = mqtt.connect('mqtt://farmer.cloudmqtt.com', options);
 
