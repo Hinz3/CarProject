@@ -8,6 +8,7 @@ import { filter, map, switchMap } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { Logger, I18nService, untilDestroyed } from '@app/core';
 
+
 const log = new Logger('App');
 
 @Component({
@@ -17,11 +18,15 @@ const log = new Logger('App');
 })
 export class AppComponent implements OnInit, OnDestroy {
 
+
+
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
               private titleService: Title,
               private translateService: TranslateService,
-              private i18nService: I18nService) { }
+              private i18nService: I18nService,) { }
+
+
 
   ngOnInit() {
     // Setup logger
