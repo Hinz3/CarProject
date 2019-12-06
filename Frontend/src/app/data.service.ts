@@ -7,13 +7,13 @@ import { map, catchError } from 'rxjs/operators';
 })
 export class DataService {
 
-  private REST_API_SERVER = "http://api.cartracker.hinz3.dk/api/car/BL86205";
+  //private  = "http://api.cartracker.hinz3.dk/api/car/BL86205";
 
   constructor(private httpClient: HttpClient) { }
 
-  async getCarData(): Promise<CarData[]> {
+  async getCarData(REST_API_SERVER:string): Promise<CarData[]> {
     return this.httpClient
-      .get(this.REST_API_SERVER)
+      .get(REST_API_SERVER)
       .pipe(map((body: CarData[]) => {
         return <CarData[]>body;
       })).toPromise();
