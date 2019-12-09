@@ -13,7 +13,7 @@ import { AboutModule } from './about/about.module';
 import { LoginModule } from './login/login.module';
 import { AppComponent } from './app.component';
 import { MapModule } from './map/map.module';
-import { StatisticsComponent } from './statistics/statistics.component';
+import { CarDataModule } from './cardata/cardata.module';
 import { StatisticsModule } from './statistics/statistics.module';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -32,6 +32,7 @@ import { AppRoutingModule } from './app-routing.module';
     LoginModule,
     MapModule,
     StatisticsModule,
+    CarDataModule,
     AppRoutingModule // must be imported as the last module as it contains the fallback route
   ],
   declarations: [AppComponent],
