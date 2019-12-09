@@ -1,26 +1,24 @@
 const express = require('express')
-const dotenv = require('dotenv');
 var mongoose = require('mongoose');
 var CarData = require('./models/CarData')
 var routes = require('./routes');
 var cors = require('cors'); 
 var mqtt = require('mqtt')
 const app = express()
-
-dotenv.config();
+const port = 3000
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-mongoose.connect(process.env.DB_STRING);
+mongoose.connect('mongodb://localhost:27017/CarProject'); // connect to database
 
 var options = {
-    port: process.env.MQTT_PORT,
-    host: process.env.MQTT_IP,
+    port: 13596,
+    host: 'mqtt://farmer.cloudmqtt.com',
     clientId: 'mqttjs_' + Math.random().toString(16).substr(2, 8),
-    username: process.env.MQTT_USERNAME,
-    password: process.env.MQTT_PASSWORD,
+    username: '',
+    password: '',
     keepalive: 60,
     reconnectPeriod: 1000,
     protocolId: 'MQIsdp',
@@ -42,8 +40,7 @@ var originsWhitelist = [
   //here is the magic
   app.use(cors(corsOptions));
 
-
-var client = mqtt.connect(process.env.MQTT_IP, options);
+var client = mqtt.connect('mqtt://farmer.cloudmqtt.com', options);
 
 client.on('connect', function() { // When connected
     console.log('connected');
@@ -84,4 +81,4 @@ app.use(function(req, res, next) {
 
 app.use('/api', routes);
 
-app.listen(process.env.PORT, () => console.log(`CarData API listening on port ${process.env.PORT}!`))
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
