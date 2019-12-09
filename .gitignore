@@ -1,4 +1,4 @@
 node_modules/
 Backend/.env
 Frontend/package-lock.json
-Backend//package-lock.json
+Backend/package-lock.json
