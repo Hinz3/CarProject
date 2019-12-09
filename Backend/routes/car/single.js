@@ -1,19 +1,5 @@
 var CarData = require('../../models/CarData');
-
-function sameDay(d1, d2) {
-    return d1.getFullYear() === d2.getFullYear() &&
-      d1.getMonth() === d2.getMonth() &&
-      d1.getDate() === d2.getDate();
-}
-
-function sameMonth(d1, d2) {
-    return d1.getFullYear() === d2.getFullYear() &&
-      d1.getMonth() === d2.getMonth();
-}
-
-function sameYear(d1, d2) {
-    return d1.getFullYear() === d2.getFullYear();
-}
+var functions = require("../../functions");
 
 module.exports = (req, res) => {
     var year = req.query.year || null;
@@ -36,7 +22,7 @@ module.exports = (req, res) => {
                 data.forEach(element => {
                     var date = new Date(element.timestamp * 1000);
 
-                    if (sameYear(checkDate, date)) carData.push(element);
+                    if (functions.sameYear(checkDate, date)) carData.push(element);
                 });
 
                 res.status(200).json(carData);
@@ -46,7 +32,7 @@ module.exports = (req, res) => {
                 data.forEach(element => {
                     var date = new Date(element.timestamp * 1000);
 
-                    if (sameMonth(checkDate, date)) carData.push(element);
+                    if (functions.sameMonth(checkDate, date)) carData.push(element);
                 });
 
                 res.status(200).json(carData);
@@ -56,7 +42,7 @@ module.exports = (req, res) => {
                 data.forEach(element => {
                     var date = new Date(element.timestamp * 1000);
 
-                    if (sameDay(checkDate, date)) {
+                    if (functions.sameDay(checkDate, date)) {
                         carData.push(element);
                     }
                 });
