@@ -1,28 +1,36 @@
 <div class="container-fluid" style="height: 90%;">
 
     <div>
+        <h3>Idle time*</h3>
+        <p style="font-size: large;"><b>{{idle}}</b> <br>
+        *When speed is 0. This data is not taken to the average calculations
+
+            
+        </p>
+    </div>
+    <div>
         <h3>Average</h3>
-        <p> Speed<ngb-progressbar type="primary" [value]="avgSpeed" [max]="160" height="25px"><b>{{avgSpeed}} Km/h</b>
+        <p> <b>Speed</b><ngb-progressbar type="primary" [value]="avgSpeed" [max]="160" height="25px"><b>{{avgSpeed}} Km/h</b>
             </ngb-progressbar>
         </p>
-        <p> RPMs<ngb-progressbar type="primary" [value]="avgRpm" [max]="6000" height="25px"><b>{{avgRpm}} /min</b>
+        <p> <b>RPMs</b><ngb-progressbar type="primary" [value]="avgRpm" [max]="6000" height="25px"><b>{{avgRpm}} /min</b>
             </ngb-progressbar>
         </p>
-        <p> Throttle position: <ngb-progressbar type="primary" [value]="avgThrottle" height="25px"><b>{{avgThrottle}} %
+        <p> <b>Throttle position</b> <ngb-progressbar type="primary" [value]="avgThrottle" height="25px"><b>{{avgThrottle}} %
                 </b></ngb-progressbar>
         </p>
     </div>
     <div>
         <h3>Max</h3>
-        <p> Speed <br>{{maxSpeedTime}} <ngb-progressbar type="primary" [value]="maxSpeed" [max]="160" height="25px">
+        <p> <b>Speed</b> <br>{{maxSpeedTime}} <ngb-progressbar type="primary" [value]="maxSpeed" [max]="160" height="25px">
                 <b>{{maxSpeed}} Km/h</b>
             </ngb-progressbar>
         </p>
-        <p> RPMs <br> {{maxRpmTime}} <ngb-progressbar type="primary" [value]="maxRpm" [max]="6000" height="25px">
+        <p> <b>RPMs</b> <br> {{maxRpmTime}} <ngb-progressbar type="primary" [value]="maxRpm" [max]="6000" height="25px">
                 <b>{{maxRpm}} /min</b>
             </ngb-progressbar>
         </p>
-        <p> Throttle position: <br> {{maxThrottleTime}} <ngb-progressbar type="primary" [value]="maxThrottle"
+        <p> <b>Throttle position</b> <br> {{maxThrottleTime}} <ngb-progressbar type="primary" [value]="maxThrottle"
                 height="25px">
                 <b>{{maxThrottle}} %</b>
             </ngb-progressbar>
