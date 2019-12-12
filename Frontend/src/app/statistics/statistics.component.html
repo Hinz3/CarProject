@@ -1,1 +1,27 @@
-<p>statistics works!</p>
+<div class="container-fluid" style="height: 90%;">
+        <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden">
+  </ngb-datepicker>
+  
+  <ng-template #t let-date let-focused="focused">
+    <span class="custom-day"
+          [class.focused]="focused"
+          [class.range]="isRange(date)"
+          [class.faded]="isHovered(date) || isInside(date)"
+          (mouseenter)="hoveredDate = date"
+          (mouseleave)="hoveredDate = null">
+      {{ date.day }}
+    </span>
+  </ng-template>
+  <div>
+    <h3>Average</h3>
+    <p> Speed<ngb-progressbar type="info" [value]="avgSpeed" [max]="160"><b>{{avgSpeed}} Km/h</b></ngb-progressbar></p>
+    <p> RPMs<ngb-progressbar type="info" [value]="avgRpm" [max]="6000">Copying file  <b>{{avgRpm}} /min</b>...</ngb-progressbar></p>
+    <p> Throttle position: <ngb-progressbar type="info" [value]="avgThrottle" ><i>{{avgThrottle}} %</i></ngb-progressbar></p>
+  </div>
+  <div>
+        <h3>Max</h3>
+        <p> Speed<ngb-progressbar type="info" [value]="maxSpeed" [max]="160"><b>{{maxSpeed}} Km/h</b></ngb-progressbar></p>
+        <p> RPMs<ngb-progressbar type="info" [value]="maxRpm" [max]="6000">Copying file  <b>{{maxRpm}} /min</b>...</ngb-progressbar></p>
+        <p> Throttle position: <ngb-progressbar type="info" [value]="maxThrottle" ><i>{{maxThrottle}} %</i></ngb-progressbar></p>
+      </div>
+  </div>

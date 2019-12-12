@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StatisticsComponent } from '../statistics/statistics.component';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { StatisticsRoutingModule } from './statistics-routing.module';
 
 
@@ -9,7 +9,8 @@ import { StatisticsRoutingModule } from './statistics-routing.module';
   declarations: [StatisticsComponent],
   imports: [
     CommonModule,
-    StatisticsRoutingModule
+    StatisticsRoutingModule,
+    NgbModule
   ]
 })
 export class StatisticsModule { }
