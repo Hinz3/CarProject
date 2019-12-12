@@ -8,23 +8,27 @@
         <p> RPMs<ngb-progressbar type="primary" [value]="avgRpm" [max]="6000" height="25px"><b>{{avgRpm}} /min</b>
             </ngb-progressbar>
         </p>
-        <p> Throttle position: <ngb-progressbar type="primary" [value]="avgThrottle" height="25px"><b>{{avgThrottle}}
-                    %</b></ngb-progressbar>
+        <p> Throttle position: <ngb-progressbar type="primary" [value]="avgThrottle" height="25px"><b>{{avgThrottle}} %
+                </b></ngb-progressbar>
         </p>
     </div>
     <div>
         <h3>Max</h3>
-        <p> Speed<ngb-progressbar type="primary" [value]="maxSpeed" [max]="160" height="25px"><b>{{maxSpeed}} Km/h</b>
+        <p> Speed <br>{{maxSpeedTime}} <ngb-progressbar type="primary" [value]="maxSpeed" [max]="160" height="25px">
+                <b>{{maxSpeed}} Km/h</b>
             </ngb-progressbar>
         </p>
-        <p> RPMs<ngb-progressbar type="primary" [value]="maxRpm" [max]="6000" height="25px"><b>{{maxRpm}} /min</b>
+        <p> RPMs <br> {{maxRpmTime}} <ngb-progressbar type="primary" [value]="maxRpm" [max]="6000" height="25px">
+                <b>{{maxRpm}} /min</b>
             </ngb-progressbar>
         </p>
-        <p> Throttle position: <ngb-progressbar type="primary" [value]="maxThrottle" height="25px"><b>{{maxThrottle}}
-                    %</b></ngb-progressbar>
+        <p> Throttle position: <br> {{maxThrottleTime}} <ngb-progressbar type="primary" [value]="maxThrottle"
+                height="25px">
+                <b>{{maxThrottle}} %</b>
+            </ngb-progressbar>
         </p>
     </div>
-    
+
     <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden">
     </ngb-datepicker>
 

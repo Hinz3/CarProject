@@ -37,8 +37,11 @@ export class StatisticsComponent implements OnInit {
   avgRpm = 0;
   avgThrottle = 0;
   maxSpeed = 0;
+  maxSpeedTime ='-';
   maxRpm = 0;
+  maxRpmTime ='-';
   maxThrottle = 0;
+  maxThrottleTime ='-';
 
   api: string;
 
@@ -73,12 +76,18 @@ export class StatisticsComponent implements OnInit {
       avgCount += 1;
       if (Number(element.speed) > this.maxSpeed) {
         this.maxSpeed = Number(element.speed)
+        var dt=new Date(Number(element.timestamp.toString()) * 1000);
+        this.maxSpeedTime ='Date: ' + dt.toDateString()+ ' Time: '+ dt.getHours()+':' + dt.getMinutes() + ':'+dt.getSeconds();
       }
       if (Number(element.rpm) > this.maxRpm) {
         this.maxRpm = Number(element.rpm)
+        var dt=new Date(Number(element.timestamp.toString()) * 1000);
+        this.maxRpmTime ='Date: ' + dt.toDateString()+ ' Time: '+ dt.getHours()+':' + dt.getMinutes() + ':'+dt.getSeconds();
       }
       if (Number(element.throttle_position) > this.maxThrottle) {
         this.maxThrottle = Number(Number(element.throttle_position).toFixed(2))
+        var dt=new Date(Number(element.timestamp.toString()) * 1000);
+        this.maxThrottleTime ='Date: ' + dt.toDateString()+ ' Time: '+ dt.getHours()+':' + dt.getMinutes() + ':'+dt.getSeconds();
       }
 
     });
