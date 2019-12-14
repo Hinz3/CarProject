@@ -81,28 +81,28 @@ export class MapComponent implements OnInit {
 
     //Loop through API data
     this.carData.forEach(element => {
+      if (element.gps != null) { // null gps means start of the trip
+        if (element.gps.toString() != 'GPS Not available') {
+          //Convert from UNIX datetime
+          this.dt = new Date(Number(element.timestamp.toString()) * 1000);
 
-      if (element.gps.toString() != 'GPS Not available') {
+          //Get latitude and longitude from API data
+          var coords = element.gps.toString().split(",");
+          var lat = this.ConvertToDEG(coords[0])
+          var lng = this.ConvertToDEG(coords[1].substr(1))
 
-        //Convert from UNIX datetime
-        this.dt = new Date(Number(element.timestamp.toString()) * 1000);
+          //Add new marker
+          this.marker = L.marker([lat, lng])
+            .bindPopup('Date: ' + this.dt.toDateString() +
+              '<br>Time: ' + this.dt.getHours() + ':' + this.dt.getMinutes() +
+              '<br>Speed: ' + element.speed +
+              'Km/h<br>RPMs: ' + element.rpm + '/min' +
+              '<br>Throttle position: ' + Number(element.throttle_position).toFixed(2) + '%')
+            .addTo(this.map);
 
-        //Get latitude and longitude from API data
-        var coords = element.gps.toString().split(",");
-        var lat = this.ConvertToDEG(coords[0])
-        var lng = this.ConvertToDEG(coords[1].substr(1))
-
-        //Add new marker
-        this.marker = L.marker([lat, lng])
-          .bindPopup('Date: ' + this.dt.toDateString() +
-          '<br>Time: '+this.dt.getHours()+':' + this.dt.getMinutes() +
-          '<br>Speed: '+element.speed + 
-          'Km/h<br>RPMs: ' + element.rpm +'/min' +
-          '<br>Throttle position: ' + Number(element.throttle_position).toFixed(2)+'%')
-          .addTo(this.map);
-
-        //Add marker to the list so it will we can delete them later
-        this.markers.push(this.marker);
+          //Add marker to the list so it will we can delete them later
+          this.markers.push(this.marker);
+        }
       }
     });
 

@@ -78,41 +78,46 @@ export class StatisticsComponent implements OnInit {
     var previousIdle = false;
     //Loop through API data
     this.carData.forEach(element => {
-      var dt = new Date(Number(element.timestamp.toString()) * 1000);
 
-      if (Number(element.speed) == 0) {
-        if(previousIdle){
-          idleTime +=  dt.getTime() - previousDt.getTime();
+      if (element.gps != null) {
+
+
+        var dt = new Date(Number(element.timestamp.toString()) * 1000);
+
+        if (Number(element.speed) == 0) {
+          if (previousIdle) {
+            idleTime += dt.getTime() - previousDt.getTime();
+          }
+          previousIdle = true;
+        } else {
+          avgSpeed += Number(element.speed);
+          avgRpm += Number(element.rpm);
+          avgThrottle += Number(element.throttle_position);
+          avgCount += 1;
+          previousIdle = false;
         }
-        previousIdle=true;
-      } else {
-        avgSpeed += Number(element.speed);
-        avgRpm += Number(element.rpm);
-        avgThrottle += Number(element.throttle_position);
-        avgCount += 1;
-        previousIdle=false;  
-      }
 
-      if (Number(element.speed) > this.maxSpeed) {
-        this.maxSpeed = Number(element.speed)
-        this.maxSpeedTime = 'Date: ' + dt.toDateString() + ' Time: ' + dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds();
-      }
-      if (Number(element.rpm) > this.maxRpm) {
-        this.maxRpm = Number(element.rpm)
-        this.maxRpmTime = 'Date: ' + dt.toDateString() + ' Time: ' + dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds();
-      }
-      if (Number(element.throttle_position) > this.maxThrottle) {
-        this.maxThrottle = Number(Number(element.throttle_position).toFixed(2))
-        this.maxThrottleTime = 'Date: ' + dt.toDateString() + ' Time: ' + dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds();
-      }
+        if (Number(element.speed) > this.maxSpeed) {
+          this.maxSpeed = Number(element.speed)
+          this.maxSpeedTime = 'Date: ' + dt.toDateString() + ' Time: ' + dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds();
+        }
+        if (Number(element.rpm) > this.maxRpm) {
+          this.maxRpm = Number(element.rpm)
+          this.maxRpmTime = 'Date: ' + dt.toDateString() + ' Time: ' + dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds();
+        }
+        if (Number(element.throttle_position) > this.maxThrottle) {
+          this.maxThrottle = Number(Number(element.throttle_position).toFixed(2))
+          this.maxThrottleTime = 'Date: ' + dt.toDateString() + ' Time: ' + dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds();
+        }
 
-      previousDt = dt;
+        previousDt = dt;
+      }
     });
 
     this.avgSpeed = Number((avgSpeed / avgCount).toFixed(1));
     this.avgRpm = Number((avgRpm / avgCount).toFixed(0));
     this.avgThrottle = Number((avgThrottle / avgCount).toFixed(2));
-    this.idle= new Date(idleTime).getMinutes().toString() + 'min ' + new Date(idleTime).getSeconds().toString()+'s';
+    this.idle = new Date(idleTime).getMinutes().toString() + 'min ' + new Date(idleTime).getSeconds().toString() + 's';
   }
 
   ngOnInit() {
