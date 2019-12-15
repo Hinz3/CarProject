@@ -1,21 +1,62 @@
-<div class="container-fluid" style="height: 90%;">
-    <div id="map" style="height: 550px;"></div>
-        <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden">
-  </ngb-datepicker>
-  
-  <ng-template #t let-date let-focused="focused">
-    <span class="custom-day"
-          [class.focused]="focused"
-          [class.range]="isRange(date)"
-          [class.faded]="isHovered(date) || isInside(date)"
-          (mouseenter)="hoveredDate = date"
-          (mouseleave)="hoveredDate = null">
-      {{ date.day }}
-    </span>
-  </ng-template>
+<div class="container-fluid">
+
+  <div>
+    <div style="float: left; padding-right: 15px;">
+      <ngb-datepicker #dp (select)="onDateSelection($event)" [dayTemplate]="t" outsideDays="hidden">
+      </ngb-datepicker>
+      <div style="padding-top: 20px;">
+        <label for="orders">Select trip:</label>
+        <select style="width: 50px; margin-left: 10px;" formControlName="orders" id="orders"
+          (change)="selectTripHandler($event)">
+          <option *ngFor="let trip of trips; let i = index" [value]="trips[i].TripId">
+            <a>{{trips[i].TripId}}</a>
+          </option>
+        </select>
+      </div>
+    </div>
+    <div id="map" style="height: 600px;"></div>
   </div>
 
-<div>
+</div>
+
+<div class="container-fluid" style="height: 90%;">
 
 
+  <div>
+    <h3>Average</h3>
+    <p> <b>Speed</b>
+      <ngb-progressbar type="primary" [value]="avgSpeed" [max]="160" height="25px"><b>{{avgSpeed}} Km/h</b>
+      </ngb-progressbar>
+    </p>
+    <p> <b>RPMs</b>
+      <ngb-progressbar type="primary" [value]="avgRpm" [max]="6000" height="25px"><b>{{avgRpm}} /min</b>
+      </ngb-progressbar>
+    </p>
+    <p> <b>Throttle position</b>
+      <ngb-progressbar type="primary" [value]="avgThrottle" height="25px"><b>{{avgThrottle}} %
+        </b></ngb-progressbar>
+    </p>
+  </div>
+  <div>
+    <h3>Max</h3>
+    <p> <b>Speed</b> <br>{{maxSpeedTime}} <ngb-progressbar type="primary" [value]="maxSpeed" [max]="160" height="25px">
+        <b>{{maxSpeed}} Km/h</b>
+      </ngb-progressbar>
+    </p>
+    <p> <b>RPMs</b> <br> {{maxRpmTime}} <ngb-progressbar type="primary" [value]="maxRpm" [max]="6000" height="25px">
+        <b>{{maxRpm}} /min</b>
+      </ngb-progressbar>
+    </p>
+    <p> <b>Throttle position</b> <br> {{maxThrottleTime}} <ngb-progressbar type="primary" [value]="maxThrottle"
+        height="25px">
+        <b>{{maxThrottle}} %</b>
+      </ngb-progressbar>
+    </p>
+  </div>
+  <div>
+    <h3>Idle time*</h3>
+    <p style="font-size: large;"><b>{{idle}}</b> <br>
+      *When speed is 0. This data is not taken to the average calculations
+    </p>
+  </div>
 </div>
