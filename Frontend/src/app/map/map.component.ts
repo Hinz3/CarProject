@@ -45,6 +45,8 @@ export class MapComponent implements OnInit {
   maxThrottle = 0;
   maxThrottleTime = '-';
   ////////
+  tripStart: string = '-';
+  tripEnd:  string = '-';
   selectedTrip: string;
   trips: Array<TripData> = [];
   carData: CarData[];
@@ -56,19 +58,13 @@ export class MapComponent implements OnInit {
   markers: Array<L.Marker> = [];
 
   date: NgbDate;
-  // fromDate: NgbDate;
-  // toDate: NgbDate;
   form: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private dataService: DataService, calendar: NgbCalendar) {
-    //this.date = calendar.getToday();
-    //this.toDate = calendar.getNext(calendar.getToday(), 'd', 2);
-
+  constructor(private formBuilder: FormBuilder, private dataService: DataService) {
     this.form = this.formBuilder.group({
       trips: []
     });
   }
-
 
   //map: mapboxgl.Map;
   //style = 'mapbox://styles/mapbox/streets-v11';
@@ -86,7 +82,6 @@ export class MapComponent implements OnInit {
     } // Don't do anything for N or E
     return this.deg;
   }
-
 
   FillStats(tripId: string) {
     this.idle = '-';
@@ -164,7 +159,6 @@ export class MapComponent implements OnInit {
       this.trips = [];
     }
 
-
     //Get data from API
     this.carData = await this.dataService.getCarData(api);
 
@@ -193,6 +187,12 @@ export class MapComponent implements OnInit {
     }
 
     if (this.trips.length > 0 && this.trips[0].Trip.length > 0) {
+
+      var startTime = new Date(Number(this.trips[0].Trip[0].timestamp.toString()) * 1000);
+      this.tripStart = startTime.getHours() + ':' + startTime.getMinutes() + ':' + startTime.getSeconds()
+
+      var endTime = new Date(Number(this.trips[0].Trip[this.trips[0].Trip.length -1].timestamp.toString()) * 1000);
+      this.tripEnd = endTime.getHours() + ':' + endTime.getMinutes() + ':' + endTime.getSeconds()
 
       this.trips[0].Trip.forEach(element => {
 
@@ -223,8 +223,8 @@ export class MapComponent implements OnInit {
     }
 
     this.FillStats("1")
-  }
 
+  }
 
   AddMarkers(tripId: string) {
     //Delete old markers if there is any
@@ -235,6 +235,12 @@ export class MapComponent implements OnInit {
     }
 
     if (this.trips.length > 0 && this.trips[0].Trip != null) {
+
+      var startTime = new Date(Number(this.trips[(Number(tripId) - 1)].Trip[0].timestamp.toString()) * 1000);
+      this.tripStart = startTime.getHours() + ':' + startTime.getMinutes() + ':' + startTime.getSeconds()
+
+      var endTime = new Date(Number(this.trips[(Number(tripId) - 1)].Trip[this.trips[(Number(tripId) - 1)].Trip.length -1].timestamp.toString()) * 1000);
+      this.tripEnd = endTime.getHours() + ':' + endTime.getMinutes() + ':' + endTime.getSeconds()
 
       this.trips[(Number(tripId) - 1)].Trip.forEach(element => {
 
@@ -279,22 +285,16 @@ export class MapComponent implements OnInit {
       id: 'mapbox.streets',
       accessToken: "pk.eyJ1IjoibXJ0bnMxIiwiYSI6ImNrM2x2ZzAzMTA3MTUzYm80aTRmMDZtdmcifQ.vVrER8K8sKhPrYBfF3wOUw",
     }).addTo(this.map);
-
-
-    //this.FillMap(this.api);
   }
 
   selectTripHandler(event: any) {
-    //update the ui
     this.AddMarkers(event.target.value)
     this.FillStats(event.target.value)
   }
 
   onDateSelection(date: NgbDate) {
-
     this.api = 'http://api.cartracker.hinz3.dk/api/car/BL86205?year=' + date.year.toString() + '&month=' + date.month.toString() + '&day=' + date.day.toString();//FOR TESTING
     this.FillMap(this.api);//FOR TESTING
     this.date = date;
-
   }
 }

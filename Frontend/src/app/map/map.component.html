@@ -2,16 +2,20 @@
 
   <div>
     <div style="float: left; padding-right: 15px;">
-      <ngb-datepicker #dp (select)="onDateSelection($event)" [dayTemplate]="t" outsideDays="hidden">
+      <ngb-datepicker #dp (select)="onDateSelection($event)">
       </ngb-datepicker>
       <div style="padding-top: 20px;">
-        <label for="orders">Select trip:</label>
+        <label for="orders"><b>Select trip:</b></label>
         <select style="width: 50px; margin-left: 10px;" formControlName="orders" id="orders"
           (change)="selectTripHandler($event)">
           <option *ngFor="let trip of trips; let i = index" [value]="trips[i].TripId">
             <a>{{trips[i].TripId}}</a>
           </option>
         </select>
+        <br>
+        <b>Trip start: {{tripStart}}</b>
+        <br>
+        <b>Trip end: {{tripEnd}}</b>
       </div>
     </div>
     <div id="map" style="height: 600px;"></div>
